@@ -62,14 +62,14 @@ class Solution2(object):
         return self.dfs(node, {})
 
     def dfs(self,node,map):
-
+        if node in map:
+            return map[node]
         newnode = UndirectedGraphNode(node.label)
         map[node] = newnode
 
         for neighbor in node.neighbors:
-            if neighbor not in map:
-                self.dfs(neighbor,map)
-                newnode.neighbors.append(map[neighbor])
+            # if neighbor not in map:
+            newnode.neighbors.append(self.dfs(neighbor,map))
 
         return newnode
 
