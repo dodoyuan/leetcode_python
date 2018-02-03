@@ -30,5 +30,32 @@ class Solution(object):
         return max(a, b)
 
 
+# https://www.youtube.com/watch?v=-i2BFAU25Zk
+class Solution1(object):
+    def rob(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        length = len(nums)
+        if length == 0:
+            return 0
+        if length == 1:
+            return nums[0]
+        rob_rf = [0]*length
+        rob_nrf = [0] * length
+        nrob_rf = [0] * length
+        nrob_nrf = [0] * length
+        rob_rf[0] = nums[0]
+        for i in xrange(1, length):
+            rob_rf[i] = nums[i] + nrob_rf[i-1]
+            nrob_rf[i] = max(rob_rf[i-1], nrob_rf[i-1])
+            rob_nrf[i] = nums[i] + nrob_nrf[i-1]
+            nrob_nrf[i] = max(rob_nrf[i-1], nrob_nrf[i-1])
+
+        return max(nrob_rf[length-1], nrob_nrf[length-1], rob_nrf[length-1])
+
+
+
 
 

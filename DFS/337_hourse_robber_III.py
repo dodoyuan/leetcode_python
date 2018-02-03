@@ -24,9 +24,46 @@ class TreeNode(object):
         self.left = None
         self.right = None
 
+
+# time limit exceed
 class Solution(object):
     def rob(self, root):
         """
         :type root: TreeNode
         :rtype: int
         """
+        if root is None:
+            return 0
+        val = 0
+        if root.left:
+            val += self.rob(root.left.left) + self.rob(root.left.right)
+        if root.right:
+            val += self.rob(root.right.left) + self.rob(root.right.right)
+        return max(root.val + val, self.rob(root.left) + self.rob(root.right))
+
+
+class Solution1(object):
+    def rob(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+
+        def robHelper(root):
+            if not root:
+                return (0, 0)
+            left, right = robHelper(root.left), robHelper(root.right)
+            return (root.val + left[1] + right[1], max(left) + max(right))
+
+        return max(robHelper(root))
+
+
+class solution(object):
+    def rob(self, root):
+        def robhelper(root):
+            if not root:
+                return [0, 0]
+            left = robhelper(root.left)
+            right = robhelper(root.right)
+            return [root.val + left[1] + right[1], max(left) + max(right)]
+        return max(robhelper(root))

@@ -9,6 +9,7 @@
 # without alerting the police.
 
 
+# easy understand
 class Solution(object):
     def rob(self, nums):
         """
