@@ -489,7 +489,14 @@
       <option name="project" value="LOCAL" />
       <updated>1517666517608</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="add 20180301">
+      <created>1519905422009</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1519905422009</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -507,7 +514,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24054463" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -539,7 +546,8 @@
     <MESSAGE value="add 20180124" />
     <MESSAGE value="add 20180131" />
     <MESSAGE value="add 20180203" />
-    <option name="LAST_COMMIT_MESSAGE" value="add 20180203" />
+    <MESSAGE value="add 20180301" />
+    <option name="LAST_COMMIT_MESSAGE" value="add 20180301" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
