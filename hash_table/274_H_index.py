@@ -15,28 +15,18 @@
 # Note: If there are several possible values for h, the maximum one
 # is taken as the h-index.
 
+
 class Solution(object):
-    def hIndex(self, citations):
-        """
-        :type citations: List[int]
-        :rtype: int
-        """
-        length = len(citations)
-        if length == 0:
-            return 0
 
-        citations = sorted(citations, reverse=True)
-        print citations
-        h = 0
-        for i in xrange(0, length):
-            if i == length-1:
-                if citations[i] >= i+1:
-                    h = i+1
+    def hIndex(self, citation):
+        length = len(citation)
+        citation = sorted(citation)
+        for i in xrange(length):
+            if length <= citation[i]:
+                return length
             else:
-                if citations[i] >= i+1 and citations[i+1] <= i+1:
-                    h = i+1
-
-        return h
+                length -= 1
+        return length
 
     def hIndex2(self, citations):
         length = len(citations)
@@ -59,5 +49,5 @@ class Solution(object):
 
 if __name__ == '__main__':
     s = Solution()
-    print s.hIndex2([3,0,6,1,5])
+    print s.hIndex([3,0,6,1,5])
 
