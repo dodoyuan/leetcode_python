@@ -29,10 +29,27 @@ class Solution(object):
                 start = mid + 1
         return start
 
-
+    def findDuplicate1(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        slow, fast = 0, 0
+        while True:
+            slow = nums[slow]
+            temp = nums[fast]
+            fast = nums[temp]
+            if slow == fast:
+                break
+        fast = 0
+        print slow
+        while slow != fast:
+            slow = nums[slow]
+            fast = nums[fast]
+        return slow
 
 
 
 if __name__ == '__main__':
     s = Solution()
-    print s.findDuplicate([1,2,3,4,5,6,3])
+    print s.findDuplicate1([1,3,4,2,2])

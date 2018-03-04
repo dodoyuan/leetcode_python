@@ -60,18 +60,3 @@ class Solution(object):
 if __name__ == '__main__':
     s = Solution()
     print s.searchMatrix([[1,3,5,7],[10,11,16,20],[23,30,34,50]],3)
-
-
-
-
-    # def binary_search(self,nums,target):
-    #     start, end = 0, len(nums) - 1
-    #     while start <= end:
-    #         mid = start + (end - start) / 2
-    #         if nums[mid] == target:
-    #             return True
-    #         if nums[mid] > target:
-    #             end = mid - 1
-    #         if nums[mid] < target:
-    #             start = mid + 1
-    #     return False
