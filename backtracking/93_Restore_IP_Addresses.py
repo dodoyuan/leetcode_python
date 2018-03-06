@@ -13,6 +13,23 @@ class Solution(object):
         :rtype: List[str]
         """
         self.res = []
+        self.dfs(s, '', 0, 0)
+        return self.res
 
-    def dfs(self,s,i):
-        if i ==
+    def dfs(self, s, subres, count, index):
+        if count > 4:
+            return
+        if count == 4 and index == len(s):
+            self.res.append(subres)
+            return
+        for i in xrange(0, 3):
+            if index + i + 1 > len(s):
+                break
+            temp = s[index:index + i + 1]
+            if (temp.startswith('0') and len(temp) > 1) or int(temp) >= 256:
+                continue
+            self.dfs(s, subres + temp + ('' if count == 3 else '.'), count + 1, index + i + 1)
+
+if __name__ == '__main__':
+    s = Solution()
+    print s.restoreIpAddresses('25525511135')
