@@ -37,7 +37,33 @@ class Solution(object):
         return False
 
 
+class Solution1(object):
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        length = len(s)
+        if s == '' or length == 1 and s in wordDict:
+            return True
+        max_len = 0
+        for string in wordDict:
+            max_len = max(max_len, len(string))
+        canBreak = [False for _ in xrange(length)]
+        for i in xrange(length):
+            left = 0 if i + 1 < max_len else i + 1 - max_len
+            for j in xrange(left, i+1):
+                if j == 0:
+                    if s[0:i+1] in wordDict:
+                        canBreak[i] = True
+                        break
+                else:
+                    if s[j:i+1] in wordDict and canBreak[j-1]:
+                        canBreak[i] = True
+                        break
+        return canBreak[-1]
 
 if __name__ == '__main__':
     s = Solution()
-    print s.wordBreak2('ab',['a', 'b'])
+    print s.wordBreak('ab',['a', 'b'])
