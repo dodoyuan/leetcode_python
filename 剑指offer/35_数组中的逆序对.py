@@ -34,3 +34,11 @@ class Solution:
 
 s = Solution()
 print s.InversePairs([1,4,2,6,2,7])
+
+# -*- coding:utf-8 -*-
+class Solution1:
+    def InversePairs(self, data):
+        # write code here
+        self.count = 0
+        for item in data[::-1]:
+            if item
