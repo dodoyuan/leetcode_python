@@ -45,18 +45,20 @@ class Solution1(object):
                 continue
             self.helper(s, subres + temp + ('.' if count < 3 else ''), count + 1, index + i + 1)
 
-# Definition for a binary tree node.
-class TreeNode(object):
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
 
-class Solution2(object):
-    def isSameTree(self, p, q):
-        """
-        :type p: TreeNode
-        :type q: TreeNode
-        :rtype: bool
-        """
+
+def menmery(func):
+    print 'hello'
+    lookup = {}
+    def wrapper(*arg):
+
+
+    return wrapper
+
+@menmery
+def fibna(n):
+    return n if n in (0, 1) else fibna(n-1) + fibna(n-2)
+
+
+# print fibna(4)
 
