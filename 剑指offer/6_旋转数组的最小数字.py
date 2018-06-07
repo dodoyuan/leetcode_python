@@ -11,7 +11,6 @@ class Solution:
         if rotateArray == []:
             return 0
         start, end = 0, len(rotateArray) - 1
-        mid = 0
         while start < end:
             mid = start + (end - start) / 2
             if rotateArray[mid] > rotateArray[end]:

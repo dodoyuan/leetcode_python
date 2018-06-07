@@ -34,10 +34,10 @@ def sort_by_values(list1, values):
     返回的是list1对应的value排序后的下标。
     '''
     sorted_list = []
-    while(len(sorted_list)!=len(list1)):
-        if index_of(min(values),values) in list1:
-            sorted_list.append(index_of(min(values),values))
-        values[index_of(min(values),values)] = float('inf')
+    while len(sorted_list) != len(list1):
+        if index_of(min(values), values) in list1:
+            sorted_list.append(index_of(min(values), values))
+        values[index_of(min(values), values)] = float('inf')
     return sorted_list
 
 
@@ -52,27 +52,27 @@ def fast_non_dominated_sort(values1, values2):
         S[p] = []  # 被p支配的解的集合
         n[p] = 0   # 支配p的解的个数
         for q in range(0, len(values1)):
-            if (values1[p] > values1[q] and values2[p] > values2[q]) or (values1[p] >= values1[q] and values2[p] > values2[q]) or (values1[p] > values1[q] and values2[p] >= values2[q]):
+            if (values1[p] < values1[q] and values2[p] < values2[q]) or (values1[p] <= values1[q] and values2[p] < values2[q]) or (values1[p] < values1[q] and values2[p] <= values2[q]):
                 if q not in S[p]:
                     S[p].append(q)
             elif (values1[q] > values1[p] and values2[q] > values2[p]) or (values1[q] >= values1[p] and values2[q] > values2[p]) or (values1[q] > values1[p] and values2[q] >= values2[p]):
-                n[p] -= 1
+                n[p] += 1
         if n[p] == 0:
             rank[p] = 0
             if p not in front[0]:
                 front[0].append(p)
 
     i = 0
-    while(front[i] != []):
-        Q=[]
+    while front[i] != []:
+        Q = []
         for p in front[i]:
             for q in S[p]:
-                n[q] =n[q] - 1
-                if( n[q]==0):
-                    rank[q]=i+1
+                n[q] -= 1
+                if n[q] == 0:
+                    rank[q] = i+1
                     if q not in Q:
                         Q.append(q)
-        i = i+1
+        i += 1
         front.append(Q)
 
     del front[len(front)-1]
@@ -81,23 +81,31 @@ def fast_non_dominated_sort(values1, values2):
 
 # Function to calculate crowding distance
 def crowding_distance(values1, values2, front):
-    distance = [0 for i in range(0,len(front))]
+    '''
+    返回的是 front(下标表示)元素的拥挤度
+    :param values1:
+    :param values2:
+    :param front:
+    :return:
+    '''
+    distance = [0 for i in range(0, len(front))]
+    # 对front中指定下标的元素，根据其对应value值进行从小到大排序，返回的是排序好的下标
     sorted1 = sort_by_values(front, values1[:])
     sorted2 = sort_by_values(front, values2[:])
     distance[0] = 4444444444444444
     distance[len(front) - 1] = 4444444444444444
     for k in range(1, len(front)-1):
         # 下面程序初次审查有点问题 values2[sorted1[k+1]] - values2[sorted1[k-1]]
-        distance[k] = distance[k] + (values1[sorted1[k+1]] - values2[sorted1[k-1]])/(max(values1)-min(values1))
-    for k in range(1,len(front)-1):
+        distance[k] = distance[k] + (values1[sorted1[k+1]] - values1[sorted1[k-1]])/(max(values1)-min(values1))
+    for k in range(1, len(front)-1):
         distance[k] = distance[k] + (values1[sorted2[k+1]] - values2[sorted2[k-1]])/(max(values2)-min(values2))
     return distance
 
 
 # Function to carry out the crossover
-def crossover(a,b):
-    r=random.random()
-    if r>0.5:
+def crossover(a, b):
+    r = random.random()
+    if r > 0.5:
         return mutation((a+b)/2)
     else:
         return mutation((a-b)/2)
@@ -133,15 +141,15 @@ while(gen_no<max_gen):
     print("\n")
     crowding_distance_values = []
     for i in range(0, len(non_dominated_sorted_solution)):
-        crowding_distance_values.append(crowding_distance(function1_values[:], function2_values[:],non_dominated_sorted_solution[i][:]))
+        crowding_distance_values.append(crowding_distance(function1_values[:], function2_values[:], non_dominated_sorted_solution[i][:]))
     solution2 = solution[:]
     # Generating offsprings
-    while(len(solution2)!=2*pop_size):
-        a1 = random.randint(0,pop_size-1)
-        b1 = random.randint(0,pop_size-1)
+    while len(solution2) != 2 * pop_size:
+        a1 = random.randint(0, pop_size-1)
+        b1 = random.randint(0, pop_size-1)
         solution2.append(crossover(solution[a1], solution[b1]))
-    function1_values2 = [function1(solution2[i])for i in range(0, 2*pop_size)]
-    function2_values2 = [function2(solution2[i])for i in range(0, 2*pop_size)]
+    function1_values2 = [function1(solution2[i]) for i in range(0, 2 * pop_size)]
+    function2_values2 = [function2(solution2[i]) for i in range(0, 2 * pop_size)]
     # 对生成的新种群进行快速非排序
     # 输出类似 [[4, 8, 20], [29, 9], [11, 34], [19, 37], [12], [36], [17, 38], [15, 28],...]
     # 其中每个元素是对应到solution中解的下标

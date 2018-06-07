@@ -1,6 +1,7 @@
 
-
 # -*- coding:utf-8 -*-
+
+# 这道题比较重要
 class Solution:
     def IsPopOrder(self, pushV, popV):
         # write code here

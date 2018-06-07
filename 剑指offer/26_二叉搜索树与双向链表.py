@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 
-
+# 比较重要，好像有另一种方法
 class TreeNode:
     def __init__(self, x):
         self.val = x
@@ -24,7 +24,6 @@ class Solution:
             else:
                 self.pre.right = root
                 root.left = self.pre
-                self.pre = root
                 self.pre = root
             self.Convert(root.right)
         return self.first

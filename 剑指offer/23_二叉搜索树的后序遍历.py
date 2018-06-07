@@ -1,6 +1,6 @@
+# -*- coding:utf-8 -*-
 
-
-
+# 思路很重要
 class Solution:
     def VerifySquenceOfBST(self, sequence):
         # write code here

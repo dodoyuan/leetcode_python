@@ -1,6 +1,8 @@
 
 # -*- coding:utf-8 -*-
 
+# 找到最合适的一种方法
+
 class TreeNode:
     def __init__(self, x):
         self.val = x

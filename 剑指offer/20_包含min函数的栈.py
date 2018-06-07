@@ -19,7 +19,8 @@ class Solution:
         return temp
     def top(self):
         # write code here
-        return self.stack[len(self.stack)-1]
+        # return self.stack[len(self.stack)-1]
+        return self.stack[-1]
     def min(self):
         # write code here
         return self.minim

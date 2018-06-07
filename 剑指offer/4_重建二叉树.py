@@ -56,7 +56,7 @@ class Solution2(object):
             return node
 
 
-if __name__ ==  "__main__":
+if __name__ == "__main__":
     preorder = [1, 2, 4,5,3,6,7]
     inorder = [4,2,5,1,6,3,7]
     result = Solution().reConstructBinaryTree(preorder, inorder)

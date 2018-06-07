@@ -6,6 +6,7 @@ class ListNode:
 
 class Solution:
     # 返回合并后列表
+    # 可以进一步优化，不用每次都生成新的节点
     def Merge(self, pHead1, pHead2):
         # write code here
         dummy = ListNode(-1)
