@@ -7,21 +7,21 @@ import random
 
 
 # First function to optimize
-# 最小化
+# 最大化
 def function1(x):
     value = -x**2
     return value
 
 
 # Second function to optimize
-# 最小化
+# 最大化
 def function2(x):
     value = -(x-2)**2
     return value
 
 
 # Function to find index of list
-def index_of(a,list):
+def index_of(a, list):
     for i in range(0, len(list)):
         if list[i] == a:
             return i
@@ -52,7 +52,7 @@ def fast_non_dominated_sort(values1, values2):
         S[p] = []  # 被p支配的解的集合
         n[p] = 0   # 支配p的解的个数
         for q in range(0, len(values1)):
-            if (values1[p] < values1[q] and values2[p] < values2[q]) or (values1[p] <= values1[q] and values2[p] < values2[q]) or (values1[p] < values1[q] and values2[p] <= values2[q]):
+            if (values1[p] > values1[q] and values2[p] > values2[q]) or (values1[p] >= values1[q] and values2[p] > values2[q]) or (values1[p] > values1[q] and values2[p] >= values2[q]):
                 if q not in S[p]:
                     S[p].append(q)
             elif (values1[q] > values1[p] and values2[q] > values2[p]) or (values1[q] >= values1[p] and values2[q] > values2[p]) or (values1[q] > values1[p] and values2[q] >= values2[p]):
@@ -88,17 +88,21 @@ def crowding_distance(values1, values2, front):
     :param front:
     :return:
     '''
+    # print 'front', front
     distance = [0 for i in range(0, len(front))]
     # 对front中指定下标的元素，根据其对应value值进行从小到大排序，返回的是排序好的下标
     sorted1 = sort_by_values(front, values1[:])
     sorted2 = sort_by_values(front, values2[:])
-    distance[0] = 4444444444444444
-    distance[len(front) - 1] = 4444444444444444
+    # print sorted1, sorted2
+    distance[0] = float('inf')
+    distance[len(front) - 1] = float('inf')
+    # distance 返回的是排序好之后的元素对应拥挤度，没有和 front 对应
     for k in range(1, len(front)-1):
         # 下面程序初次审查有点问题 values2[sorted1[k+1]] - values2[sorted1[k-1]]
         distance[k] = distance[k] + (values1[sorted1[k+1]] - values1[sorted1[k-1]])/(max(values1)-min(values1))
     for k in range(1, len(front)-1):
         distance[k] = distance[k] + (values1[sorted2[k+1]] - values2[sorted2[k-1]])/(max(values2)-min(values2))
+    print 'distance:', distance
     return distance
 
 
@@ -115,12 +119,12 @@ def crossover(a, b):
 def mutation(solution):
     mutation_prob = random.random()
     if mutation_prob <1:
-        solution = min_x+(max_x-min_x)*random.random()
+        solution = min_x + (max_x-min_x) * random.random()
     return solution
 
 # Main program starts here
 pop_size = 20
-max_gen = 2
+max_gen = 30
 
 
 # Initialization
@@ -128,11 +132,11 @@ min_x = -55
 max_x = 55
 solution = [min_x+(max_x-min_x)*random.random() for i in range(0, pop_size)]
 gen_no = 0
-while(gen_no<max_gen):
-    function1_values = [function1(solution[i])for i in range(0, pop_size)]
-    function2_values = [function2(solution[i])for i in range(0, pop_size)]
+while(gen_no < max_gen):
+    function1_values = [function1(solution[i]) for i in range(0, pop_size)]
+    function2_values = [function2(solution[i]) for i in range(0, pop_size)]
     # non_dominated_sorted_solution 中保存的是每层pareto最优解的序号
-    non_dominated_sorted_solution = fast_non_dominated_sort(function1_values[:],function2_values[:])
+    non_dominated_sorted_solution = fast_non_dominated_sort(function1_values[:], function2_values[:])
     print("The best front for Generation number ", gen_no, " is")
     for valuez in non_dominated_sorted_solution[0]:
         # print(round(solution[valuez],3),end=" ")
@@ -160,13 +164,14 @@ while(gen_no<max_gen):
     for i in range(0, len(non_dominated_sorted_solution2)):
         crowding_distance_values2.append(crowding_distance(function1_values2[:], function2_values2[:], non_dominated_sorted_solution2[i][:]))
     new_solution = []
-    # 从父子种群中选择出数量N的最优种群作为父种群
+    # 从父子种群中选择出数量N的最优种群作为父种群,这步最需要理解
     for i in range(0, len(non_dominated_sorted_solution2)):
         non_dominated_sorted_solution2_1 = [index_of(non_dominated_sorted_solution2[i][j], non_dominated_sorted_solution2[i]) for j in range(0, len(non_dominated_sorted_solution2[i]))]
-        print non_dominated_sorted_solution2_1
+        # 这里比较乱，代码写的不好
         front22 = sort_by_values(non_dominated_sorted_solution2_1[:], crowding_distance_values2[i][:])
         front = [non_dominated_sorted_solution2[i][front22[j]] for j in range(0, len(non_dominated_sorted_solution2[i]))]
         front.reverse()
+        print 'front:', front
         for value in front:
             new_solution.append(value)
             if len(new_solution) == pop_size:
